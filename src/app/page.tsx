@@ -5,9 +5,11 @@ import Topbar from "./components/topbar";
 import { Footer } from "./components/footer";
 import { useState } from "react";
 import CursorTrail from "@/components/CursorTrail";
+import InViewPop from "@/components/InViewPop";
 
 const bubbleProperties = "z-30 shadow-[inset_-0px_-0px_20px_#ffffff60] bg-white/40 backdrop-blur-sm rounded-3xl border-1 border border-white/40";
 const shadowProperties = "shadow-[0_0px_40px_rgb(0,0,0,0.03)]";
+const combinedShadowProperties = "shadow-[inset_0px_2px_10px_rgba(255,255,255,0.6),_0_4px_20px_rgba(0,0,0,0.02)] z-30 bg-white/40 backdrop-blur-sm rounded-3xl border-1 border border-white/40";
 
 const SparkleIcon = ({ color, size }: { color: string, size: number }) => {
   return <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24"><g fill="none"><path d="m12.594 23.258l-.012.002l-.071.035l-.02.004l-.014-.004l-.071-.036q-.016-.004-.024.006l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.016-.018m.264-.113l-.014.002l-.184.093l-.01.01l-.003.011l.018.43l.005.012l.008.008l.201.092q.019.005.029-.008l.004-.014l-.034-.614q-.005-.019-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.003-.011l.018-.43l-.003-.012l-.01-.01z"/><path fill={color} d="M9.107 5.448c.598-1.75 3.016-1.803 3.725-.159l.06.16l.807 2.36a4 4 0 0 0 2.276 2.411l.217.081l2.36.806c1.75.598 1.803 3.016.16 3.725l-.16.06l-2.36.807a4 4 0 0 0-2.412 2.276l-.081.216l-.806 2.361c-.598 1.75-3.016 1.803-3.724.16l-.062-.16l-.806-2.36a4 4 0 0 0-2.276-2.412l-.216-.081l-2.36-.806c-1.751-.598-1.804-3.016-.16-3.724l.16-.062l2.36-.806A4 4 0 0 0 8.22 8.025l.081-.216zM11 6.094l-.806 2.36a6 6 0 0 1-3.49 3.649l-.25.091l-2.36.806l2.36.806a6 6 0 0 1 3.649 3.49l.091.25l.806 2.36l.806-2.36a6 6 0 0 1 3.49-3.649l.25-.09l2.36-.807l-2.36-.806a6 6 0 0 1-3.649-3.49l-.09-.25zM19 2a1 1 0 0 1 .898.56l.048.117l.35 1.026l1.027.35a1 1 0 0 1 .118 1.845l-.118.048l-1.026.35l-.35 1.027a1 1 0 0 1-1.845.117l-.048-.117l-.35-1.026l-1.027-.35a1 1 0 0 1-.118-1.845l.118-.048l1.026-.35l.35-1.027A1 1 0 0 1 19 2" strokeWidth="0.4" stroke={color}/></g></svg>
@@ -15,7 +17,7 @@ const SparkleIcon = ({ color, size }: { color: string, size: number }) => {
 
 const TextBubble = ({ text, className }: { text: string, className?: string }) => {
   return (
-    <div className={`relative z-30 flex flex-col items-start justify-center gap-2 p-4 ${bubbleProperties} ${className}`}>
+    <div className={`relative z-30 flex flex-col items-start justify-center gap-2 p-4 ${combinedShadowProperties} ${className}`}>
       <SparkleIcon color="black" size={24} />
       <span className="text-base text-start whitespace-pre-wrap">
         {text}
@@ -25,6 +27,8 @@ const TextBubble = ({ text, className }: { text: string, className?: string }) =
 };
 
 export default function Home() {
+  const [activeTab, setActiveTab] = useState("Track");
+
   return (
     <main className="relative bg-white w-screen min-h-screen flex flex-col items-center justify-center">
     
@@ -32,6 +36,7 @@ export default function Home() {
         <CursorTrail />
       </div>
 
+      {/* Topbar */}
       <div className="relative z-50  w-full flex flex-row items-center justify-between px-6 py-4">
         <img src="https://i.imgur.com/SVrdyVm.png" alt="logo" className="w-auto h-10" />
         <div className="flex flex-row items-center justify-center gap-4">
@@ -46,20 +51,30 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="relative w-full h-screen flex flex-col items-center justify-center text-center">
+      {/* Hero Section */}
+      <div className="relative w-full h-[calc(100vh-80px)] flex flex-col items-center justify-center text-center">
         {/* Main INKING Title */}
-        <div className="relative z-10 mb-8">
+        <motion.div 
+          initial={{ opacity: 0, scale: 1.1 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.2, delay: 0, stiffness: 300, damping: 60 }}
+          className="relative z-10 mb-8"
+        >
           <img src="https://i.imgur.com/9yAk7pa.png" alt="logo" className="w-full h-32" />
-        </div>
+        </motion.div>
 
         {/* Subtitle */}
-        <div className="mb-12 max-w-2xl">
+        <motion.div 
+          className="mb-12 max-w-2xl"
+        >
           <p className="text-xl md:text-2xl text-gray-700 font-medium leading-relaxed">
-            Supercharge your creative growth with AI-powered insight and clarity
+            Supercharge your artistic journey with data-driven insights and personalized recommendations.
           </p>
-        </div>
+        </motion.div>
 
-        <div className="relative z-30 mb-16 w-full max-w-4xl">
+        <motion.div 
+          className="relative z-30 mb-16 w-full max-w-4xl"
+        >
           <div className="bg-white/80 backdrop-blur-lg border border-gray-500/10 rounded-3xl gap-4 flex flex-col px-6 py-5 shadow-[inset_-0px_-0px_40px_#4646460A]">
             {/* Input Area */}
             <div className="relative flex-1">
@@ -79,10 +94,10 @@ export default function Home() {
                   </svg>
                 </button>
                 <button className="w-10 h-10 border border-gray-400 rounded-xl flex items-center justify-center opacity-50">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none"><path d="m12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.018-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"/><path fill="#ec4067" d="M5.636 10.586a3.5 3.5 0 1 1 4.95-4.95l7.778 7.778a3.5 3.5 0 0 1-4.95 4.95l-4.066-4.066a1.25 1.25 0 1 1 1.768-1.768l3.712 3.713a1 1 0 0 0 1.415-1.415l-3.713-3.712a3.25 3.25 0 0 0-4.596 4.596L12 19.778A5.5 5.5 0 1 0 19.778 12L12 4.222A5.5 5.5 0 1 0 4.222 12l.353.353A1 1 0 1 0 5.99 10.94z" stroke-width="0.4" stroke="#ec4067"/></g></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none"><path d="m12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.018-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"/><path fill="#ec4067" d="M5.636 10.586a3.5 3.5 0 1 1 4.95-4.95l7.778 7.778a3.5 3.5 0 0 1-4.95 4.95l-4.066-4.066a1.25 1.25 0 1 1 1.768-1.768l3.712 3.713a1 1 0 0 0 1.415-1.415l-3.713-3.712a3.25 3.25 0 0 0-4.596 4.596L12 19.778A5.5 5.5 0 1 0 19.778 12L12 4.222A5.5 5.5 0 1 0 4.222 12l.353.353A1 1 0 1 0 5.99 10.94z" strokeWidth="0.4" stroke="#ec4067"/></g></svg>
                 </button>
                 <button className="w-10 h-10 border border-gray-400 rounded-xl flex items-center justify-center opacity-50">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" fill-rule="evenodd"><path d="m12.594 23.258l-.012.002l-.071.035l-.02.004l-.014-.004l-.071-.036q-.016-.004-.024.006l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.016-.018m.264-.113l-.014.002l-.184.093l-.01.01l-.003.011l.018.43l.005.012l.008.008l.201.092q.019.005.029-.008l.004-.014l-.034-.614q-.005-.019-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.003-.011l.018-.43l-.003-.012l-.01-.01z"/><path fill="#a01a7d" d="M18 14a1 1 0 0 1 1 1v2h2a1 1 0 1 1 0 2h-2v2a1 1 0 1 1-2 0v-2h-2a1 1 0 1 1 0-2h2v-2a1 1 0 0 1 1-1M16 3a1 1 0 0 1 1 1v1h2a2 2 0 0 1 2 2v4a1 1 0 0 1-1 1H5v7h6a1 1 0 1 1 0 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h2V4a1 1 0 0 1 2 0v1h6V4a1 1 0 0 1 1-1m3 4H5v3h14z" stroke-width="0.4" stroke="#a01a7d"/></g></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" fillRule="evenodd"><path d="m12.594 23.258l-.012.002l-.071.035l-.02.004l-.014-.004l-.071-.036q-.016-.004-.024.006l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.016-.018m.264-.113l-.014.002l-.184.093l-.01.01l-.003.011l.018.43l.005.012l.008.008l.201.092q.019.005.029-.008l.004-.014l-.034-.614q-.005-.019-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.003-.011l.018-.43l-.003-.012l-.01-.01z"/><path fill="#a01a7d" d="M18 14a1 1 0 0 1 1 1v2h2a1 1 0 1 1 0 2h-2v2a1 1 0 1 1-2 0v-2h-2a1 1 0 1 1 0-2h2v-2a1 1 0 0 1 1-1M16 3a1 1 0 0 1 1 1v1h2a2 2 0 0 1 2 2v4a1 1 0 0 1-1 1H5v7h6a1 1 0 1 1 0 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h2V4a1 1 0 0 1 2 0v1h6V4a1 1 0 0 1 1-1m3 4H5v3h14z" strokeWidth="0.4" stroke="#a01a7d"/></g></svg>
                 </button>
               </div>
               
@@ -98,7 +113,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
         <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
           <p className="text-gray-600 text-sm">
             Powered by <a href="https://artfol.app/?utm_source=inking" className="underline font-medium">Artfol</a>
@@ -106,8 +121,11 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="w-full bg-black h-40 flex flex-col items-center justify-center text-center px-8">
-      <img src="https://i.imgur.com/FbNV7hh.png" alt="logo" className="w-1/2 h-auto invert" />
+      <div className="w-full bg-gray-200 h-44 flex flex-row gap-8 items-center justify-center text-center px-8">
+        <img src="/images/1002.png" alt="logo" className="w-auto h-16 invert" />
+        <img src="/images/1003.png" alt="logo" className="w-auto h-14 invert" />
+        <img src="/images/1001.png" alt="logo" className="w-auto h-14 invert brightness-0" />
+        <img src="/images/1000.png" alt="logo" className="w-auto h-16 " />
 
       </div>
 
@@ -115,7 +133,9 @@ export default function Home() {
       <div className="max-w-[1200px] relative py-10 z-10 w-full h-fit flex flex-row items-center justify-center text-center px-8 gap-4">
         <div className="relative z-20 w-full h-full flex flex-col items-center justify-center">
           <div className="relative w-full pl-[10%] aspect-[1]">
-            <img src="https://i.imgur.com/Z9B4BpX.jpg" alt="logo" className={`w-full object-cover rounded-2xl ${shadowProperties}`} />
+            <InViewPop action="up">
+              <img src="https://i.imgur.com/Z9B4BpX.jpg" alt="logo" className={`w-full object-cover rounded-2xl ${shadowProperties}`} />
+            </InViewPop>
             <div className="absolute bottom-8 left-2 z-10 flex flex-col items-start justify-center gap-4">
               <TextBubble text="Increasing the hair contrast by 20% will allow for better background separation." className="text-black/80 font-medium text-start w-2/3" />
               <TextBubble text="Darken the lower third to create better visual weight distribution." className="text-black/80 font-medium text-start w-2/3" />
@@ -123,7 +143,9 @@ export default function Home() {
           </div>
         </div>
         <div className="relative z-20 w-full h-full flex flex-col items-center justify-center">
-          <img src="https://i.imgur.com/jd4eu4G.png" alt="logo" className="p-6 w-full h-auto" />
+          <InViewPop>
+            <img src="https://i.imgur.com/jd4eu4G.png" alt="logo" className="p-6 w-full h-auto" />
+          </InViewPop>
         </div>
         <div 
           className="absolute left-10 transform -translate-x-1/2 pointer-events-none"
@@ -143,13 +165,13 @@ export default function Home() {
           Get personalized insights on your composition, color theory, and visual balance.
           </span>
         </div>
-        <div className={`${shadowProperties} relative z-20 bg-white rounded-2xl w-full h-full flex flex-col items-start justify-start p-6 gap-4`}>
+        <div className={`${shadowProperties} relative z-20 border border-gray-500/10 bg-white rounded-2xl w-full h-full flex flex-col items-start justify-start p-6 gap-4`}>
           <SparkleIcon color="black" size={32} />
           <span className="text-black/60 text-lg font-regular text-start whitespace-pre-wrap">
           Track your technical progress with detailed analysis of your artistic development.
           </span>
         </div>
-        <div className={`${shadowProperties} relative z-20 bg-white rounded-2xl w-full h-full flex flex-col items-start justify-start p-6 gap-4`}>
+        <div className={`${shadowProperties} relative z-20 border border-gray-500/10 bg-white rounded-2xl w-full h-full flex flex-col items-start justify-start p-6 gap-4`}>
           <SparkleIcon color="black" size={32} />
           <span className="text-black/60 text-lg font-regular text-start whitespace-pre-wrap">
             Gain deep analysis into your style evolution and technique consistency over time.
@@ -159,7 +181,7 @@ export default function Home() {
           className="absolute top-0 right-0 transform translate-x-1/2 pointer-events-none"
           style={{
             background: 'radial-gradient(50% 50% at 50% 50%, rgba(250, 117, 248, 0.28) 0%, rgba(250, 117, 248, 0) 100%)',
-            opacity: 0.9,
+            opacity: 0.4,
             width: '1845px',
             height: '1230px',
             zIndex: -1
@@ -168,55 +190,229 @@ export default function Home() {
       </div>
       <div className="relative max-w-[1200px] py-10 z-10 w-full h-fit flex flex-col items-stretch justify-center text-center px-8 gap-4">
         <div className="w-full h-full flex flex-col items-center justify-center">
-          <img src="https://i.imgur.com/8mIAHk2.png" alt="logo" className="w-auto h-24" />
+          <InViewPop>
+            <img src="/images/1012.png" alt="logo" className="w-auto h-24" />
+          </InViewPop>
         </div>
         <div className="flex flex-row items-center justify-center">
           <p className="text-lg text-gray-700 font-medium leading-relaxed w-[80%] mt-6">
-          Track your progress as our data-driven AI model recommends how to improve your work and build a stronger portfolio. Whether you're working on sketches or finished pieces, get real-time insights that help you make better creative decisions.
+          Keep a journal of your progress as our data-driven AI model recommends how to improve your work and build a stronger portfolio. Whether you're working on sketches or finished pieces, get real-time insights that help you make better creative decisions.
           </p>
         </div>
-        <div className="w-[80%] ml-[10%] relative z-20 w-full pr-[15%] h-fit">
-          <img src="https://i.imgur.com/NJQERFM.png" alt="logo" className={`w-full h-auto rounded-2xl ${shadowProperties}`} />
-          <div style={{bottom: '-20px'}}  className="absolute right-2 mr-[10%] z-10 flex flex-col items-end justify-center gap-4">
-            <TextBubble text="Your sketching pace has improved 40% this month." className="text-black/80 font-medium text-start text-xl w-1/2" />
-            <TextBubble text="Based on your past work, schedule 2.5 hours for character sketches instead of 1.5 hours." className="text-black/80 font-medium text-start w-1/2" />
-            <TextBubble text="Your finished pieces improve when you sketch the day before coloring. Let sketches sit overnight before coloring." className="text-black/80 font-medium text-start w-1/2" />
+        
+        {/* Tab Selector */}
+        <div className="flex justify-center mb-8">
+          <div className={`${shadowProperties} rounded-xl flex flex-row items-center justify-center gap-4 p-2`}>
+            <button
+              onClick={() => setActiveTab("Track")}
+              className={`px-6 py-3 rounded-xl font-medium transition-all duration-200 ${
+                activeTab === "Track"
+                  ? `bg-white text-black ${shadowProperties}`
+                  : "text-gray-600 hover:text-black"
+              }`}
+            >
+              Track
+            </button>
+            <button
+              onClick={() => setActiveTab("Log")}
+              className={`px-6 py-3 rounded-xl font-medium transition-all duration-200 ${
+                activeTab === "Log"
+                  ? `bg-white text-black ${shadowProperties}`
+                  : "text-gray-600 hover:text-black"
+              }`}
+            >
+              Log
+            </button>
           </div>
         </div>
-      </div>
-      <div className="relative max-w-[1200px] my-10 px-8 z-10 w-full h-fit flex flex-row items-stretch justify-center text-center gap-4">
-        {/* https://mir-s3-cdn-cf.behance.net/project_modules/fs/ab723877268563.5c829061bd6ea.jpg */}
-        <div className={`${shadowProperties} relative z-20 w-full aspect-[2] bg-white rounded-2xl overflow-hidden flex flex-row items-center justify-center`}>
-          <div className="relative z-20 w-full h-full min-h-[400px] flex flex-col items-center justify-center">
-            <img src="https://i.imgur.com/sL2FiCx.png" className="absolute top-0 left-0 w-full aspect-square object-cover inset-0" />
-          </div>
-          <div className="relative z-20 w-full h-full gap-4 flex flex-col items-center justify-center">
-            <div className="flex flex-col items-start justify-center w-3/4 h-auto z-20">
-              <img src="https://i.imgur.com/7AdnBtR.png" alt="logo" className="w-3/4 h-auto" />
+        
+        {activeTab === "Track" && (
+          <div className="w-[80%] ml-[5%] relative z-20 w-full pr-[15%] h-fit">
+            <InViewPop action="up">
+              <img src={"/images/1011.png"} alt="logo" className={`w-full h-auto rounded-2xl ${shadowProperties}`} />
+            </InViewPop>
+            <div style={{bottom: '-20px'}}  className="absolute right-2 mr-[10%] z-10 flex flex-col items-end justify-center gap-4">
+              <TextBubble text="Your sketching pace has improved 40% this month." className="text-black/80 font-medium text-start text-xl w-1/2" />
+              <TextBubble text="Based on your past work, schedule 2.5 hours for character sketches instead of 1.5 hours." className="text-black/80 font-medium text-start w-1/2" />
+              <TextBubble text="Your finished pieces improve when you sketch the day before coloring. Let sketches sit overnight before coloring." className="text-black/80 font-medium text-start w-1/2" />
             </div>
-            <span className="text-black/80 font-semibold text-start text-lg w-3/4">
-            Every artist is unique, and so is their path to improvement. Inking doesn't give generic advice, it analyzes your specific work patterns, style choices, and creative habits to deliver insights tailored exclusively to you.
-            </span>
           </div>
-        </div>
-        <div 
-           className="absolute -z-10 top-0 left-0 transform -translate-x-1/2 -translate-y-[20%] pointer-events-none"
-           style={{
-             background: 'radial-gradient(50% 50% at 50% 50%, rgba(117, 121, 250, 0.28) 0%, rgba(117, 135, 250, 0) 100%)',
-             opacity: 0.7,
-             width: '1845px',
-             height: '1230px',
-             zIndex: 1
-           }}
-         />
+        )}
+        {activeTab === "Log" && (
+          <div className="w-[80%] ml-[5%] relative z-20 w-full pr-[15%] h-fit">
+            <InViewPop action="up">
+              <img src={"/images/1010.png"} alt="logo" className={`w-full h-auto rounded-2xl ${shadowProperties}`} />
+            </InViewPop>
+            <div style={{bottom: '-20px'}}  className="absolute right-2 mr-[10%] z-10 flex flex-col items-end justify-center gap-4">
+              <TextBubble text="Based on your past work, schedule 2.5 hours for character sketches instead of 1.5 hours." className="text-black/80 font-medium text-start w-1/2" />
+              <TextBubble text="Your finished pieces improve when you sketch the day before coloring. Let sketches sit overnight before coloring." className="text-black/80 font-medium text-start w-1/2" />
+            </div>
+          </div>
+        )}
       </div>
+      <div className="w-full h-full mt-10 flex flex-col items-center justify-center">
+        <InViewPop>
+          <img src="/images/1013.png" alt="logo" className="w-auto h-24" />
+        </InViewPop>
+      </div>
+      <div className="flex flex-row items-center justify-center">
+        <span className="text-lg text-gray-700 font-medium leading-relaxed w-[80%] mt-6">
+        Inking provides you with personalized recommendations on what to draw next, based on your style, past work and future goals.
+        </span>
+      </div>
+           {/* AI Recommendation Interface */}
+      <div className="relative max-w-[1200px] py-16 z-10 w-full h-fit flex flex-col items-center justify-center px-8">
+        
+        {/* User Input */}
+        <div className="w-full max-w-4xl">
+          <InViewPop action="up" delay={0.3}>
+          <div className={`${shadowProperties} rounded-2xl bg-white p-6 mb-6`}>
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0">
+                <img src="https://cdna.artstation.com/p/assets/images/images/019/512/560/large/madalena-cerda-jpeg-image-0ca401e86692-39.jpg?1563832276" alt="logo" className="w-full h-full rounded-full" />
+              </div>
+              <p className="text-gray-800 text-lg leading-relaxed">
+                I want to explore a new subject matter but keep my existing style
+              </p>
+            </div>
+          </div>
+          </InViewPop>
+          
+          {/* AI Response */}
+          <InViewPop action="up" delay={0.6}>
+            <div className={`${shadowProperties} rounded-2xl bg-white p-6 mb-8`}>
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 bg-gradient-to-r from-orange-400 to-pink-500 rounded-full flex items-center justify-center flex-shrink-0">
+                  <SparkleIcon color="white" size={22} />
+                </div>
+                <div className="flex-1">
+                  <p className="text-gray-800 text-lg leading-relaxed mb-4">
+                    Based on your current style and drawing progress, I'd recommend exploring more <strong>action poses</strong>. This can help expand your pose library, especially since much of your recent work has focused on still or static figures. I've also put together an action plan tailored to your past progress and drawing speed to help guide you through this next step.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </InViewPop>
+        </div>
+
+        {/* Recommendation Cards */}
+        <div className="max-w-4xl w-full grid grid-cols-1 md:grid-cols-3 gap-6">
+          
+          {/* Card 1 */}
+          <InViewPop>
+            <div className={`${combinedShadowProperties} rounded-2xl p-6 h-full flex flex-col justify-between`}>
+              <div>
+                <h3 className="text-xl font-bold text-gray-800 mb-3">Basic action poses</h3>
+                <div className="space-y-2 mb-4">
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                    <span className="text-gray-700 font-medium">Sketch</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                    <span className="text-gray-700 font-medium">Time: 1 - 2 hours</span>
+                  </div>
+                </div>
+              </div>
+              <button className="bg-white text-gray-800 px-4 py-2 rounded-xl border border-gray-500/10 font-medium">
+                Start Practice
+              </button>
+            </div>
+          </InViewPop>
+
+          {/* Card 2 */}
+          <InViewPop>
+            <div className={`${combinedShadowProperties} rounded-2xl p-6 h-full flex flex-col justify-between`}>
+              <div>
+                <h3 className="text-xl font-bold text-gray-800 mb-3">Composition</h3>
+                <div className="space-y-2 mb-4">
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                    <span className="text-gray-700 font-medium">Sketch</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                    <span className="text-gray-700 font-medium">Time: 1 hour</span>
+                  </div>
+                </div>
+              </div>
+              <button className="bg-white text-gray-800 px-4 py-2 rounded-xl border border-gray-500/10 font-medium">
+                Start Practice
+              </button>
+            </div>
+          </InViewPop>
+
+          {/* Card 3 */}
+          <InViewPop>
+            <div className={`${combinedShadowProperties} rounded-2xl p-6 h-full flex flex-col justify-between`}>
+              <div>
+                <h3 className="text-xl font-bold text-gray-800 mb-3">Poses with multiple people</h3>
+                <div className="space-y-2 mb-4">
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                    <span className="text-gray-700 font-medium">Sketch</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                    <span className="text-gray-700 font-medium">Time: 2 hours</span>
+                  </div>
+                </div>
+              </div>
+              <button className="bg-white text-gray-800 px-4 py-2 rounded-xl border border-gray-500/10 font-medium">
+                Start Practice
+              </button>
+            </div>
+          </InViewPop>
+        </div>
+
+        {/* Background Gradient */}
+        <div 
+          className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/4 pointer-events-none"
+          style={{
+            background: 'radial-gradient(50% 50% at 50% 50%, rgba(248, 0, 0, 0.15) 0%, rgba(247, 85, 85, 0) 100%)',
+            opacity: 0.5,
+            width: '1200px',
+            height: '1200px',
+            zIndex: -1
+          }}
+        />
+      </div> 
+      
+      <InViewPop>
+        <div className="relative max-w-[1200px] my-10 px-8 z-10 w-full h-fit flex flex-row items-stretch justify-center text-center gap-4">
+          {/* https://mir-s3-cdn-cf.behance.net/project_modules/fs/ab723877268563.5c829061bd6ea.jpg */}
+          <div className={`${shadowProperties} relative z-20 w-full aspect-[2] bg-white rounded-2xl overflow-hidden flex flex-row items-center justify-center`}>
+            <div className="relative z-20 w-full h-full min-h-[400px] flex flex-col items-center justify-center">
+              <img src="https://i.imgur.com/sL2FiCx.png" className="absolute top-0 left-0 w-full aspect-square object-cover inset-0" />
+            </div>
+            <div className="relative z-20 w-full h-full gap-4 flex flex-col items-center justify-center">
+              <div className="flex flex-col items-start justify-center w-3/4 h-auto z-20">
+                <img src="https://i.imgur.com/7AdnBtR.png" alt="logo" className="w-3/4 h-auto" />
+              </div>
+              <span className="text-black/80 font-semibold text-start text-lg w-3/4">
+              Every artist is unique, and so is their path to improvement. Inking doesn't give generic advice, it analyzes your specific work patterns, style choices, and creative habits to deliver insights tailored exclusively to you.
+              </span>
+            </div>
+          </div>
+          <div 
+            className="absolute -z-10 top-0 left-0 transform -translate-x-1/2 -translate-y-[20%] pointer-events-none"
+            style={{
+              background: 'radial-gradient(50% 50% at 50% 50%, rgba(40, 40, 239, 0.28) 0%, rgba(250, 117, 124, 0) 100%)',
+              opacity: 0.4,
+              width: '1845px',
+              height: '1230px',
+              zIndex: 1
+            }}
+          />
+        </div>
+      </InViewPop>
       <div id="about" className="relative max-w-[1200px] py-10 my-10 z-10 w-full h-fit flex flex-row items-stretch justify-center text-center px-8 gap-4">
         <div className="relative z-20 w-full h-full min-h-[400px] flex flex-col items-center justify-center gap-4">
            <img src="https://i.imgur.com/bJmNVFP.png" className="h-16 w-auto" />
           <span className="text-black/80 font-semibold text-start text-lg w-3/4">
           We built Artfol to support artists, and now we're building the tools that will help artists of all skills improve.  We believe AI can be used as a tool to help artists grow, and we're excited to see what the future holds.
           <br/><br/>
-          You can join over 500,000 artists on Artfol today and start sharing art and making friends. 
+          Join over 500,000 artists on Artfol today and start sharing art and making friends. 
           </span>
         </div>
         <div className="relative z-10 w-full h-full min-h-[400px] flex flex-col items-center justify-center">
