@@ -1,95 +1,245 @@
-import Image from "next/image";
+"use client";
 import styles from "./page.module.css";
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import Topbar from "./components/topbar";
+import { Footer } from "./components/footer";
+import { useState } from "react";
+import CursorTrail from "@/components/CursorTrail";
+
+const bubbleProperties = "z-30 shadow-[inset_-0px_-0px_20px_#ffffff60] bg-white/40 backdrop-blur-sm rounded-3xl border-1 border border-white/40";
+const shadowProperties = "shadow-[0_0px_40px_rgb(0,0,0,0.03)]";
+
+const SparkleIcon = ({ color, size }: { color: string, size: number }) => {
+  return <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24"><g fill="none"><path d="m12.594 23.258l-.012.002l-.071.035l-.02.004l-.014-.004l-.071-.036q-.016-.004-.024.006l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.016-.018m.264-.113l-.014.002l-.184.093l-.01.01l-.003.011l.018.43l.005.012l.008.008l.201.092q.019.005.029-.008l.004-.014l-.034-.614q-.005-.019-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.003-.011l.018-.43l-.003-.012l-.01-.01z"/><path fill={color} d="M9.107 5.448c.598-1.75 3.016-1.803 3.725-.159l.06.16l.807 2.36a4 4 0 0 0 2.276 2.411l.217.081l2.36.806c1.75.598 1.803 3.016.16 3.725l-.16.06l-2.36.807a4 4 0 0 0-2.412 2.276l-.081.216l-.806 2.361c-.598 1.75-3.016 1.803-3.724.16l-.062-.16l-.806-2.36a4 4 0 0 0-2.276-2.412l-.216-.081l-2.36-.806c-1.751-.598-1.804-3.016-.16-3.724l.16-.062l2.36-.806A4 4 0 0 0 8.22 8.025l.081-.216zM11 6.094l-.806 2.36a6 6 0 0 1-3.49 3.649l-.25.091l-2.36.806l2.36.806a6 6 0 0 1 3.649 3.49l.091.25l.806 2.36l.806-2.36a6 6 0 0 1 3.49-3.649l.25-.09l2.36-.807l-2.36-.806a6 6 0 0 1-3.649-3.49l-.09-.25zM19 2a1 1 0 0 1 .898.56l.048.117l.35 1.026l1.027.35a1 1 0 0 1 .118 1.845l-.118.048l-1.026.35l-.35 1.027a1 1 0 0 1-1.845.117l-.048-.117l-.35-1.026l-1.027-.35a1 1 0 0 1-.118-1.845l.118-.048l1.026-.35l.35-1.027A1 1 0 0 1 19 2" strokeWidth="0.4" stroke={color}/></g></svg>
+}
+
+const TextBubble = ({ text, className }: { text: string, className?: string }) => {
+  return (
+    <div className={`relative z-30 flex flex-col items-start justify-center gap-2 p-4 ${bubbleProperties} ${className}`}>
+      <SparkleIcon color="black" size={24} />
+      <span className="text-base text-start whitespace-pre-wrap">
+        {text}
+      </span>
+    </div>
+  );
+};
 
 export default function Home() {
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>src/app/page.tsx</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <main className="relative bg-white w-screen min-h-screen flex flex-col items-center justify-center">
+    
+      <div className="relative z-20">
+        <CursorTrail />
+      </div>
 
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
+      <div className="relative z-50  w-full flex flex-row items-center justify-between px-6 py-4">
+        <img src="https://i.imgur.com/SVrdyVm.png" alt="logo" className="w-auto h-10" />
+        <div className="flex flex-row items-center justify-center gap-4">
+          <button onClick={() => {
+            const about = document.getElementById('about');
+            if (about) {
+              about.scrollIntoView({ behavior: 'smooth' });
+            }
+          }} className="bg-black px-5 py-3 rounded-3xl flex items-center justify-center mr-6">
+            <span className="text-white text-sm tracking-wide font-medium">About</span>
+          </button>
         </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      </div>
+
+      <div className="relative w-full h-screen flex flex-col items-center justify-center text-center">
+        {/* Main INKING Title */}
+        <div className="relative z-10 mb-8">
+          <img src="https://i.imgur.com/9yAk7pa.png" alt="logo" className="w-full h-32" />
+        </div>
+
+        {/* Subtitle */}
+        <div className="mb-12 max-w-2xl">
+          <p className="text-xl md:text-2xl text-gray-700 font-medium leading-relaxed">
+            Supercharge your creative growth with AI-powered insight and clarity
+          </p>
+        </div>
+
+        <div className="relative z-30 mb-16 w-full max-w-4xl">
+          <div className="bg-white/80 backdrop-blur-lg border border-gray-500/10 rounded-3xl gap-4 flex flex-col px-6 py-5 shadow-[inset_-0px_-0px_40px_#4646460A]">
+            {/* Input Area */}
+            <div className="relative flex-1">
+              <input 
+                type="text" 
+                placeholder="How can I help you today?"
+                className="w-full bg-transparent text-gray-200 placeholder-gray-400 text-lg outline-none"
+                style={{ fontSize: '16px' }}
+              />
+            </div>
+            <div className="flex w-full items-center justify-between gap-4">
+              {/* Left Action Buttons */}
+              <div className="flex gap-2">
+              <button className="w-10 h-10 border border-gray-400 rounded-xl flex items-center justify-center opacity-50">
+                <svg className="w-5 h-5 text-gray-300" fill="none" stroke="#ef5d60" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M12 4v16m8-8H4" />
+                  </svg>
+                </button>
+                <button className="w-10 h-10 border border-gray-400 rounded-xl flex items-center justify-center opacity-50">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none"><path d="m12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.018-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"/><path fill="#ec4067" d="M5.636 10.586a3.5 3.5 0 1 1 4.95-4.95l7.778 7.778a3.5 3.5 0 0 1-4.95 4.95l-4.066-4.066a1.25 1.25 0 1 1 1.768-1.768l3.712 3.713a1 1 0 0 0 1.415-1.415l-3.713-3.712a3.25 3.25 0 0 0-4.596 4.596L12 19.778A5.5 5.5 0 1 0 19.778 12L12 4.222A5.5 5.5 0 1 0 4.222 12l.353.353A1 1 0 1 0 5.99 10.94z" stroke-width="0.4" stroke="#ec4067"/></g></svg>
+                </button>
+                <button className="w-10 h-10 border border-gray-400 rounded-xl flex items-center justify-center opacity-50">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" fill-rule="evenodd"><path d="m12.594 23.258l-.012.002l-.071.035l-.02.004l-.014-.004l-.071-.036q-.016-.004-.024.006l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.016-.018m.264-.113l-.014.002l-.184.093l-.01.01l-.003.011l.018.43l.005.012l.008.008l.201.092q.019.005.029-.008l.004-.014l-.034-.614q-.005-.019-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.003-.011l.018-.43l-.003-.012l-.01-.01z"/><path fill="#a01a7d" d="M18 14a1 1 0 0 1 1 1v2h2a1 1 0 1 1 0 2h-2v2a1 1 0 1 1-2 0v-2h-2a1 1 0 1 1 0-2h2v-2a1 1 0 0 1 1-1M16 3a1 1 0 0 1 1 1v1h2a2 2 0 0 1 2 2v4a1 1 0 0 1-1 1H5v7h6a1 1 0 1 1 0 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h2V4a1 1 0 0 1 2 0v1h6V4a1 1 0 0 1 1-1m3 4H5v3h14z" stroke-width="0.4" stroke="#a01a7d"/></g></svg>
+                </button>
+              </div>
+              
+              {/* Right Side - Model and Send */}
+              <div className="flex items-center gap-4">
+                
+                {/* Send Button */}
+                <button className="w-10 h-10 bg-[#e09f7d] rounded-full flex items-center justify-center transition-colors">
+                  <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+          <p className="text-gray-600 text-sm">
+            Powered by <a href="https://artfol.app/?utm_source=inking" className="underline font-medium">Artfol</a>
+          </p>
+        </div>
+      </div>
+
+      <div className="w-full bg-black h-40 flex flex-col items-center justify-center text-center px-8">
+      <img src="https://i.imgur.com/FbNV7hh.png" alt="logo" className="w-1/2 h-auto invert" />
+
+      </div>
+
+
+      <div className="max-w-[1200px] relative py-10 z-10 w-full h-fit flex flex-row items-center justify-center text-center px-8 gap-4">
+        <div className="relative z-20 w-full h-full flex flex-col items-center justify-center">
+          <div className="relative w-full pl-[10%] aspect-[1]">
+            <img src="https://i.imgur.com/Z9B4BpX.jpg" alt="logo" className={`w-full object-cover rounded-2xl ${shadowProperties}`} />
+            <div className="absolute bottom-8 left-2 z-10 flex flex-col items-start justify-center gap-4">
+              <TextBubble text="Increasing the hair contrast by 20% will allow for better background separation." className="text-black/80 font-medium text-start w-2/3" />
+              <TextBubble text="Darken the lower third to create better visual weight distribution." className="text-black/80 font-medium text-start w-2/3" />
+            </div>
+          </div>
+        </div>
+        <div className="relative z-20 w-full h-full flex flex-col items-center justify-center">
+          <img src="https://i.imgur.com/jd4eu4G.png" alt="logo" className="p-6 w-full h-auto" />
+        </div>
+        <div 
+          className="absolute left-10 transform -translate-x-1/2 pointer-events-none"
+          style={{
+            background: 'radial-gradient(50% 50% at 50% 50%, rgba(223, 228, 68, 0.48) 0%, rgba(239, 250, 117, 0) 100%)',
+            opacity: 0.4,
+            width: '1845px',
+            height: '1530px',
+            zIndex: -1
+          }}
+        />
+      </div>
+      <div className="max-w-[1200px] relative py-10 z-10 w-full h-fit flex flex-row items-stretch justify-center text-center px-8 gap-4">
+        <div className={`${shadowProperties} relative z-20 border border-gray-500/10 bg-white rounded-2xl w-full h-full flex flex-col items-start justify-start p-6 gap-4`}>
+          <SparkleIcon color="black" size={32} />
+          <span className="text-black/60 text-lg font-regular text-start whitespace-pre-wrap">
+          Get personalized insights on your composition, color theory, and visual balance.
+          </span>
+        </div>
+        <div className={`${shadowProperties} relative z-20 bg-white rounded-2xl w-full h-full flex flex-col items-start justify-start p-6 gap-4`}>
+          <SparkleIcon color="black" size={32} />
+          <span className="text-black/60 text-lg font-regular text-start whitespace-pre-wrap">
+          Track your technical progress with detailed analysis of your artistic development.
+          </span>
+        </div>
+        <div className={`${shadowProperties} relative z-20 bg-white rounded-2xl w-full h-full flex flex-col items-start justify-start p-6 gap-4`}>
+          <SparkleIcon color="black" size={32} />
+          <span className="text-black/60 text-lg font-regular text-start whitespace-pre-wrap">
+            Gain deep analysis into your style evolution and technique consistency over time.
+          </span>
+        </div>
+        <div 
+          className="absolute top-0 right-0 transform translate-x-1/2 pointer-events-none"
+          style={{
+            background: 'radial-gradient(50% 50% at 50% 50%, rgba(250, 117, 248, 0.28) 0%, rgba(250, 117, 248, 0) 100%)',
+            opacity: 0.9,
+            width: '1845px',
+            height: '1230px',
+            zIndex: -1
+          }}
+        />
+      </div>
+      <div className="relative max-w-[1200px] py-10 z-10 w-full h-fit flex flex-col items-stretch justify-center text-center px-8 gap-4">
+        <div className="w-full h-full flex flex-col items-center justify-center">
+          <img src="https://i.imgur.com/8mIAHk2.png" alt="logo" className="w-auto h-24" />
+        </div>
+        <div className="flex flex-row items-center justify-center">
+          <p className="text-lg text-gray-700 font-medium leading-relaxed w-[80%] mt-6">
+          Track your progress as our data-driven AI model recommends how to improve your work and build a stronger portfolio. Whether you're working on sketches or finished pieces, get real-time insights that help you make better creative decisions.
+          </p>
+        </div>
+        <div className="w-[80%] ml-[10%] relative z-20 w-full pr-[15%] h-fit">
+          <img src="https://i.imgur.com/NJQERFM.png" alt="logo" className={`w-full h-auto rounded-2xl ${shadowProperties}`} />
+          <div style={{bottom: '-20px'}}  className="absolute right-2 mr-[10%] z-10 flex flex-col items-end justify-center gap-4">
+            <TextBubble text="Your sketching pace has improved 40% this month." className="text-black/80 font-medium text-start text-xl w-1/2" />
+            <TextBubble text="Based on your past work, schedule 2.5 hours for character sketches instead of 1.5 hours." className="text-black/80 font-medium text-start w-1/2" />
+            <TextBubble text="Your finished pieces improve when you sketch the day before coloring. Let sketches sit overnight before coloring." className="text-black/80 font-medium text-start w-1/2" />
+          </div>
+        </div>
+      </div>
+      <div className="relative max-w-[1200px] my-10 px-8 z-10 w-full h-fit flex flex-row items-stretch justify-center text-center gap-4">
+        {/* https://mir-s3-cdn-cf.behance.net/project_modules/fs/ab723877268563.5c829061bd6ea.jpg */}
+        <div className={`${shadowProperties} relative z-20 w-full aspect-[2] bg-white rounded-2xl overflow-hidden flex flex-row items-center justify-center`}>
+          <div className="relative z-20 w-full h-full min-h-[400px] flex flex-col items-center justify-center">
+            <img src="https://i.imgur.com/sL2FiCx.png" className="absolute top-0 left-0 w-full aspect-square object-cover inset-0" />
+          </div>
+          <div className="relative z-20 w-full h-full gap-4 flex flex-col items-center justify-center">
+            <div className="flex flex-col items-start justify-center w-3/4 h-auto z-20">
+              <img src="https://i.imgur.com/7AdnBtR.png" alt="logo" className="w-3/4 h-auto" />
+            </div>
+            <span className="text-black/80 font-semibold text-start text-lg w-3/4">
+            Every artist is unique, and so is their path to improvement. Inking doesn't give generic advice, it analyzes your specific work patterns, style choices, and creative habits to deliver insights tailored exclusively to you.
+            </span>
+          </div>
+        </div>
+        <div 
+           className="absolute -z-10 top-0 left-0 transform -translate-x-1/2 -translate-y-[20%] pointer-events-none"
+           style={{
+             background: 'radial-gradient(50% 50% at 50% 50%, rgba(117, 121, 250, 0.28) 0%, rgba(117, 135, 250, 0) 100%)',
+             opacity: 0.7,
+             width: '1845px',
+             height: '1230px',
+             zIndex: 1
+           }}
+         />
+      </div>
+      <div id="about" className="relative max-w-[1200px] py-10 my-10 z-10 w-full h-fit flex flex-row items-stretch justify-center text-center px-8 gap-4">
+        <div className="relative z-20 w-full h-full min-h-[400px] flex flex-col items-center justify-center gap-4">
+           <img src="https://i.imgur.com/bJmNVFP.png" className="h-16 w-auto" />
+          <span className="text-black/80 font-semibold text-start text-lg w-3/4">
+          We built Artfol to support artists, and now we're building the tools that will help artists of all skills improve.  We believe AI can be used as a tool to help artists grow, and we're excited to see what the future holds.
+          <br/><br/>
+          You can join over 500,000 artists on Artfol today and start sharing art and making friends. 
+          </span>
+        </div>
+        <div className="relative z-10 w-full h-full min-h-[400px] flex flex-col items-center justify-center">
+          <div className="absolute top-0 left-0 w-full h-full bg-black/10 rounded-2xl inset-0 z-20" />
+          <img src="https://cdn.dribbble.com/userupload/26085269/file/original-5c358d51927c77fba334cf08483d2841.jpg?resize=752x564&vertical=center" className="absolute top-0 left-0 w-full h-full object-cover rounded-2xl inset-0" />
+          <div className="relative z-40 w-full h-full gap-4 flex flex-col items-center justify-center">
+            <img src="https://i.imgur.com/ACCcHac.png" className="w-20 h-20" />
+            <motion.button 
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => {
+              window.open('https://artfol.app?utm_source=inking&utm_medium=referral&utm_campaign=inking_bottom_cta', '_blank');
+            }} className="relative z-40 bg-white px-5 py-4 rounded-3xl flex items-center justify-center">
+              <span className="text-black text-base tracking-wide font-medium">Join Artfol</span>
+            </motion.button>
+          </div>
+        </div>
+      </div>
+
+      {/* Footer */}
+      <div className="w-full bg-black h-40 flex flex-col items-center justify-center text-center px-8">
+        <img src="https://i.imgur.com/FbNV7hh.png" alt="logo" className="w-1/2 h-auto invert" />
+      </div>
+    </main>
   );
 }
