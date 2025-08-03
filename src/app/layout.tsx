@@ -14,8 +14,8 @@ const marckScript = Marck_Script({
 });
 
 export const metadata: Metadata = {
-  title: "inking.ai",
-  description: "",
+  title: "inking.ai by Artfol",
+  description: "Next-gen art tool for visual artists",
   robots: {
     index: false,
     follow: false,
@@ -47,8 +47,7 @@ export default function RootLayout({
         <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex" />
         <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex" />
         <meta name="bingbot" content="noindex, nofollow, noarchive, nosnippet, noimageindex" />
-        
-        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" type="image/x-icon" href="/icon.ico"/>
         <link rel="icon" href="/favicon-16x16.png" type="image/png" sizes="16x16" />
         <link rel="icon" href="/favicon-32x32.png" type="image/png" sizes="32x32" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
