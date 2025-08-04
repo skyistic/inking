@@ -142,7 +142,12 @@ export default function Home() {
       </div>
 
 
-      <div className="max-w-[1200px] relative py-10 z-10 w-full h-fit flex flex-col md:flex-row items-center justify-center text-center px-4 md:px-8 gap-4">
+      <div className="max-w-[1200px] relative pb-0 sm:pb-10 pt-10  z-10 w-full h-fit flex flex-col md:flex-row items-center justify-center text-center px-4 md:px-8 gap-4">
+        <div className="relative z-20 w-full h-full flex sm:hidden flex-col items-center justify-center mt-8 md:mt-0">
+          <InViewPop>
+            <img src="https://i.imgur.com/jd4eu4G.png" alt="logo" className="p-3 md:p-6 w-full h-auto" />
+          </InViewPop>
+        </div>
         <div className="relative z-20 w-full h-full flex flex-col items-center justify-center">
           <div className="relative w-full md:pl-[10%] aspect-[1]">
             <InViewPop action="up">
@@ -154,7 +159,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className="relative z-20 w-full h-full flex flex-col items-center justify-center mt-8 md:mt-0">
+        <div className="relative z-20 w-full h-full hidden sm:flex flex-col items-center justify-center mt-8 md:mt-0">
           <InViewPop>
             <img src="https://i.imgur.com/jd4eu4G.png" alt="logo" className="p-3 md:p-6 w-full h-auto" />
           </InViewPop>
@@ -335,7 +340,7 @@ export default function Home() {
         </div>
 
         {/* Recommendation Cards */}
-        <div className="w-full grid grid-cols-3 w-[200%] sm:w-[80%] gap-4 sm:gap-6">
+        <div className="grid grid-cols-3 w-[200%] sm:w-full max-w-none sm:max-w-4xl gap-4 sm:gap-6">
           
           {/* Card 1 */}
           <InViewPop>
@@ -420,11 +425,11 @@ export default function Home() {
       <InViewPop>
         <div className="relative max-w-[1200px] my-10 px-8 z-10 w-full h-fit flex flex-col sm:flex-row items-stretch justify-center text-center gap-4">
           {/* https://mir-s3-cdn-cf.behance.net/project_modules/fs/ab723877268563.5c829061bd6ea.jpg */}
-          <div className={`${shadowProperties} relative z-20 w-full aspect-[1/2] sm:aspect-[2] bg-white rounded-2xl overflow-hidden flex flex-col md:flex-row items-center justify-center`}>
-            <div className="relative z-20 w-full h-full min-h-[200px] md:min-h-[400px] flex flex-col items-center justify-center">
+          <div className={`${shadowProperties} relative z-20 w-full sm:aspect-[2] bg-white rounded-2xl overflow-hidden flex flex-col md:flex-row items-center justify-center`}>
+            <div className="relative z-20 w-full h-full aspect-[1] min-h-[200px] md:min-h-[400px] flex flex-col items-center justify-center">
               <img src="/images/1014.png" className="absolute top-0 left-0 w-full aspect-square object-cover inset-0" />
             </div>
-            <div className="relative z-20 w-full h-full gap-4 flex flex-col items-center justify-center p-4 md:p-0">
+            <div className="relative z-20 py-8 sm:py-0 w-full h-full gap-4 flex flex-col items-center justify-center px-4 md:px-0">
               <div className="flex flex-col items-start justify-center w-3/4 h-auto z-20">
                 <img src="/images/1015.png" alt="logo" className="w-full w-[95%] sm:w-3/4 h-auto" />
               </div>
