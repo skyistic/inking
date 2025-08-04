@@ -335,7 +335,7 @@ export default function Home() {
         </div>
 
         {/* Recommendation Cards */}
-        <div className="max-w-4xl w-full grid grid-cols-3 w-[200vw] gap-4 md:gap-6">
+        <div className="w-full grid grid-cols-3 w-[200%] sm:w-[80%] gap-4 sm:gap-6">
           
           {/* Card 1 */}
           <InViewPop>
@@ -375,7 +375,7 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-              <button className="bg-white text-gray-800 px-4 py-2 rounded-xl border border-gray-300/10 font-medium text-sm md:text-base">
+              <button className={`${combinedShadowProperties.replace("bg-white/40", "").replace("border-white/40", "border-gray-500/10")} bg-white text-gray-800 px-4 py-2 rounded-xl border border-gray-300/10 font-medium text-sm md:text-base`}>
                 Start Practice
               </button>
             </div>
