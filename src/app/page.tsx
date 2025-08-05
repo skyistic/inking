@@ -3,9 +3,41 @@ import styles from "./page.module.css";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import Topbar from "./components/topbar";
 import { Footer } from "./components/footer";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CursorTrail from "@/components/CursorTrail";
 import InViewPop from "@/components/InViewPop";
+import Image from "next/image";
+import Head from "next/head";
+
+// List of all local images to preload
+const LOCAL_IMAGES = [
+  '/images/1000.png',
+  '/images/1001.png',
+  '/images/1002.png',
+  '/images/1003.png',
+  '/images/1010.png',
+  '/images/1011.png',
+  '/images/1012.png',
+  '/images/1013.png',
+  '/images/1014.png',
+  '/images/1015.png',
+  '/images/1016.png',
+  '/images/1017.png',
+  '/images/1018.png',
+];
+
+// Preload images function
+const preloadImages = (imageUrls: string[]) => {
+  if (typeof window !== 'undefined') {
+    imageUrls.forEach((url) => {
+      const link = document.createElement('link');
+      link.rel = 'preload';
+      link.as = 'image';
+      link.href = url;
+      document.head.appendChild(link);
+    });
+  }
+};
 
 const bubbleProperties = "z-30 shadow-[inset_-0px_-0px_20px_#ffffff60] bg-white/40 backdrop-blur-sm rounded-3xl border-1 border border-white/40";
 const shadowProperties = "shadow-[0_0px_40px_rgb(0,0,0,0.03)]";
@@ -41,6 +73,10 @@ const TextBubble = ({ text, className }: { text: string, className?: string }) =
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState("Track");
+
+  useEffect(() => {
+    preloadImages(LOCAL_IMAGES);
+  }, []);
 
   return (
     <main className="relative bg-white w-screen min-h-screen flex flex-col items-center justify-center">
@@ -110,7 +146,7 @@ export default function Home() {
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" className="md:w-6 md:h-6"><g fill="none"><path d="m12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.018-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"/><path fill="#ec4067" d="M5.636 10.586a3.5 3.5 0 1 1 4.95-4.95l7.778 7.778a3.5 3.5 0 0 1-4.95 4.95l-4.066-4.066a1.25 1.25 0 1 1 1.768-1.768l3.712 3.713a1 1 0 0 0 1.415-1.415l-3.713-3.712a3.25 3.25 0 0 0-4.596 4.596L12 19.778A5.5 5.5 0 1 0 19.778 12L12 4.222A5.5 5.5 0 1 0 4.222 12l.353.353A1 1 0 1 0 5.99 10.94z" strokeWidth="0.4" stroke="#ec4067"/></g></svg>
                 </button>
                 <button className="w-8 h-8 md:w-10 md:h-10 border border-gray-400 rounded-xl flex items-center justify-center opacity-50">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" className="md:w-6 md:h-6"><g fill="none" fillRule="evenodd"><path d="m12.594 23.258l-.012.002l-.071.035l-.02.004l-.014-.004l-.071-.036q-.016-.004-.024.006l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.016-.018m.264-.113l-.014.002l-.184.093l-.01.01l-.003.011l.018.43l.005.012l.008.008l.201.092q.019.005.029-.008l.004-.014l-.034-.614q-.005-.019-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.003-.011l.018-.43l-.003-.012l-.01-.01z"/><path fill="#a01a7d" d="M18 14a1 1 0 0 1 1 1v2h2a1 1 0 1 1 0 2h-2v2a1 1 0 1 1-2 0v-2h-2a1 1 0 1 1 0-2h2v-2a1 1 0 0 1 1-1M16 3a1 1 0 0 1 1 1v1h2a2 2 0 0 1 2 2v4a1 1 0 0 1-1 1H5v7h6a1 1 0 1 1 0 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h2V4a1 1 0 0 1 2 0v1h6V4a1 1 0 0 1 1-1m3 4H5v3h14z" strokeWidth="0.4" stroke="#a01a7d"/></g></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" className="md:w-6 md:h-6"><g fill="none" fillRule="evenodd"><path d="m12.594 23.258l-.012.002l-.071.035l-.02.004l-.014-.004l-.071-.036q-.016-.004-.024.006l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.016-.018m.264-.113l-.014.002l-.184.093l-.01.01l-.003.011l.018.43l.005.012l.008.008l.201.092q.019.005.029-.008l.004-.014l-.034-.614q-.005-.019-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"/><path fill="#a01a7d" d="M18 14a1 1 0 0 1 1 1v2h2a1 1 0 1 1 0 2h-2v2a1 1 0 1 1-2 0v-2h-2a1 1 0 1 1 0-2h2v-2a1 1 0 0 1 1-1M16 3a1 1 0 0 1 1 1v1h2a2 2 0 0 1 2 2v4a1 1 0 0 1-1 1H5v7h6a1 1 0 1 1 0 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h2V4a1 1 0 0 1 2 0v1h6V4a1 1 0 0 1 1-1m3 4H5v3h14z" strokeWidth="0.4" stroke="#a01a7d"/></g></svg>
                 </button>
               </div>
               

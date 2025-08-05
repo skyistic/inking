@@ -53,6 +53,21 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="manifest" href="/site.webmanifest" />
         
+        {/* Preload critical images */}
+        <link rel="preload" href="/images/1003.png" as="image" />
+        <link rel="preload" href="/images/1000.png" as="image" />
+        <link rel="preload" href="/images/1001.png" as="image" />
+        <link rel="preload" href="/images/1002.png" as="image" />
+        <link rel="preload" href="/images/1012.png" as="image" />
+        <link rel="preload" href="/images/1013.png" as="image" />
+        <link rel="preload" href="/images/1014.png" as="image" />
+        <link rel="preload" href="/images/1015.png" as="image" />
+        <link rel="preload" href="/images/1016.png" as="image" />
+        <link rel="preload" href="/images/1017.png" as="image" />
+        <link rel="preload" href="/images/1018.png" as="image" />
+        <link rel="preload" href="/images/1010.png" as="image" />
+        <link rel="preload" href="/images/1011.png" as="image" />
+        
         {/* Additional SEO tags */}
         {/* <meta name="theme-color" content="#014131" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
