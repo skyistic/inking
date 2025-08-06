@@ -8,6 +8,8 @@ import CursorTrail from "@/components/CursorTrail";
 import InViewPop from "@/components/InViewPop";
 import Image from "next/image";
 import Head from "next/head";
+import { useImagePreloader } from "@/components/useImagePreloader";
+import ImagePreloadIndicator from "@/components/ImagePreloadIndicator";
 
 // List of all local images to preload
 const LOCAL_IMAGES = [
@@ -25,19 +27,6 @@ const LOCAL_IMAGES = [
   '/images/1017.png',
   '/images/1018.png',
 ];
-
-// Preload images function
-const preloadImages = (imageUrls: string[]) => {
-  if (typeof window !== 'undefined') {
-    imageUrls.forEach((url) => {
-      const link = document.createElement('link');
-      link.rel = 'preload';
-      link.as = 'image';
-      link.href = url;
-      document.head.appendChild(link);
-    });
-  }
-};
 
 const bubbleProperties = "z-30 shadow-[inset_-0px_-0px_20px_#ffffff60] bg-white/40 backdrop-blur-sm rounded-3xl border-1 border border-white/40";
 const shadowProperties = "shadow-[0_0px_40px_rgb(0,0,0,0.03)]";
@@ -73,13 +62,20 @@ const TextBubble = ({ text, className }: { text: string, className?: string }) =
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState("Track");
-
-  useEffect(() => {
-    preloadImages(LOCAL_IMAGES);
-  }, []);
+  
+  // Use the advanced image preloader hook
+  const { imagesLoaded, progress, loadedImages, failedImages } = useImagePreloader(LOCAL_IMAGES);
 
   return (
     <main className="relative bg-white w-screen min-h-screen flex flex-col items-center justify-center">
+      
+      {/* Image Preload Indicator - Remove this if you don't want to show loading progress */}
+      <ImagePreloadIndicator 
+        isLoading={!imagesLoaded}
+        progress={progress}
+        totalImages={LOCAL_IMAGES.length}
+        loadedImages={loadedImages.length}
+      />
     
       <div className="relative z-20">
         <CursorTrail />
@@ -171,10 +167,18 @@ export default function Home() {
       </div>
 
       <div className="w-full bg-gray-300 py-10 grid grid-cols-2 gap-4 sm:flex sm:flex-row sm:gap-8 items-center justify-center text-center px-8 md:px-8 md:overflow-x-auto">
-        <img src="/images/1003.png" alt="logo" className="opacity-90 w-auto h-10 sm:h-14 invert justify-self-center md:flex-shrink-0" />
-        <img src="/images/1000.png" alt="logo" className="opacity-90 w-auto h-12 sm:h-16 justify-self-center md:flex-shrink-0" />
-        <img src="/images/1001.png" alt="logo" className="opacity-90 w-auto h-10 sm:h-14 invert brightness-0 justify-self-center md:flex-shrink-0" />
-        <img src="/images/1002.png" alt="logo" className="opacity-90 w-auto h-12 sm:h-16 invert justify-self-center md:flex-shrink-0" />
+        <div className="opacity-90 h-10 sm:h-14 justify-self-center md:flex-shrink-0 relative">
+          <Image src="/images/1003.png" alt="logo" width={120} height={56} className="invert object-contain w-auto h-full" priority />
+        </div>
+        <div className="opacity-90 h-12 sm:h-16 justify-self-center md:flex-shrink-0 relative">
+          <Image src="/images/1000.png" alt="logo" width={120} height={64} className="object-contain w-auto h-full" priority />
+        </div>
+        <div className="opacity-90 h-10 sm:h-14 justify-self-center md:flex-shrink-0 relative">
+          <Image src="/images/1001.png" alt="logo" width={120} height={56} className="invert brightness-0 object-contain w-auto h-full" priority />
+        </div>
+        <div className="opacity-90 h-12 sm:h-16 justify-self-center md:flex-shrink-0 relative">
+          <Image src="/images/1002.png" alt="logo" width={120} height={64} className="invert object-contain w-auto h-full" priority />
+        </div>
       </div>
 
 
@@ -244,7 +248,9 @@ export default function Home() {
       <div className="relative max-w-[1200px] py-10 z-10 w-full h-fit flex flex-col items-stretch justify-center text-center px-4 md:px-8 gap-4">
         <div className="w-full h-full flex flex-col items-center justify-center">
           <InViewPop>
-            <img src="/images/1012.png" alt="logo" className="w-auto h-16 md:h-24" />
+            <div className="w-auto h-16 md:h-24 relative">
+              <Image src="/images/1012.png" alt="logo" width={200} height={96} className="object-contain w-auto h-full" />
+            </div>
           </InViewPop>
         </div>
         <div className="flex flex-row items-center justify-center">
@@ -332,7 +338,9 @@ export default function Home() {
       </div>
       <div className="w-full h-full mt-10 flex flex-col items-center justify-center">
         <InViewPop>
-          <img src="/images/1013.png" alt="logo" className="w-auto h-16 md:h-24" />
+          <div className="w-auto h-16 md:h-24 relative">
+            <Image src="/images/1013.png" alt="logo" width={200} height={96} className="object-contain w-auto h-full" />
+          </div>
         </InViewPop>
       </div>
       <div className="max-w-[1200px] flex flex-row items-center justify-center px-4">
@@ -514,7 +522,9 @@ export default function Home() {
 
       {/* Footer */}
       <div className="w-full bg-black h-32 md:h-40 flex flex-col items-center justify-center text-center px-4 md:px-8">
-        <img src="/images/1018.png" alt="logo" className="w-3/4 md:w-1/2 h-auto invert" />
+        <div className="w-3/4 md:w-1/2 h-auto relative">
+          <Image src="/images/1018.png" alt="logo" width={400} height={80} className="invert object-contain w-full h-auto" />
+        </div>
       </div>
     </main>
   );

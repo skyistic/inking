@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { DM_Sans, Marck_Script } from "next/font/google";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/next";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -107,6 +108,7 @@ export default function RootLayout({
       </head>
       <body className={`${dmSans.variable} ${marckScript.variable} font-sans`}>
         {children}
+        <Analytics />
       </body>
     </html>
   );
